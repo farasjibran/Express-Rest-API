@@ -48,4 +48,43 @@ Employee.createEmployeData = (employeeData, result) => {
   })
 }
 
+// update employee
+Employee.updateEmployeData = (id, employeeData, result) => {
+  console.log(id)
+  dbConn.query(
+    `UPDATE employes SET name=?, gender=?, birthday=?, email=?, phone=?, salary=? WHERE id=?`,
+    [
+      employeeData.name,
+      employeeData.gender,
+      employeeData.birthday,
+      employeeData.email,
+      employeeData.phone,
+      employeeData.salary,
+      id,
+    ],
+    (err, res) => {
+      if (err) {
+        console.log('Error while updating employee')
+        result(null, err)
+      } else {
+        console.log('Employee updated successfully', employeeData)
+        result(null, res)
+      }
+    },
+  )
+}
+
+// delete employee
+Employee.deleteEmployee = (id, result) => {
+  dbConn.query(`DELETE FROM employes WHERE id=?`, id, (err, res) => {
+    if (err) {
+      console.log('Error while delete employee')
+      result(null, err)
+    } else {
+      console.log('Employee delete successfully')
+      result(null, res)
+    }
+  })
+}
+
 module.exports = Employee

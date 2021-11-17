@@ -61,3 +61,48 @@ exports.createNewEmployee = (req, res) => {
     })
   }
 }
+
+// update employe
+exports.updateEmployee = (req, res) => {
+  const employeeData = new EmployeeModel(req.body)
+
+  // Validation
+  if ((req.body.constructor === Object.keys(req.body).length) === 0) {
+    res.send(400).send({ success: 400, message: 'Please fill all fields' })
+  } else {
+    EmployeeModel.updateEmployeData(req.params.id, employeeData, (err) => {
+      if (err) {
+        res.send(err)
+        res.json({
+          status: 404,
+          message: 'Something went wrong',
+        })
+      } else {
+        res.json({
+          status: 200,
+          message: 'Employee Success Updated',
+          data: employeeData,
+        })
+      }
+    })
+  }
+}
+
+// delete employe
+exports.deleteEmployee = (req, res) => {
+  EmployeeModel.deleteEmployee(req.params.id, (err, employee) => {
+    if (err) {
+      res.send(err)
+      res.json({
+        status: 404,
+        message: 'Something went wrong',
+      })
+    } else {
+      res.json({
+        status: 200,
+        message: 'Employee Success Deleted',
+        data: employee.insertId,
+      })
+    }
+  })
+}

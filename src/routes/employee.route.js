@@ -12,4 +12,10 @@ router.get('/:id', EmployeeController.getEmployeeByID)
 // create employee
 router.post('/', EmployeeController.createNewEmployee)
 
+// update employee
+router.put('/:id', EmployeeController.updateEmployee)
+
+// delete employee
+router.delete('/:id', EmployeeController.deleteEmployee)
+
 module.exports = router
